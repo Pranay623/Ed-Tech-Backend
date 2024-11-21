@@ -9,7 +9,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 
 import chatSocket from './sockets/chat.js';
-import AutRoutes from './routes/auth.js';
+import AuthRoutes from './routes/auth.js';
 import chatroomRoutes from './routes/chatroom.js';
 
 const app = express();
@@ -29,7 +29,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 
-app.use('/auth', AutRoutes);
+app.use('/auth', AuthRoutes);
 // app.use('', postRoutes)
 // app.use('', profileRoutes)
 app.use('/chatroom', chatroomRoutes);
