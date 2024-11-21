@@ -175,7 +175,7 @@ export const commentOnPost = async(req,res) => {
         let commentIndex = -1;
         post.comments.forEach((item, index) => {
             console.log(item);
-            if((item.user.toString) === req.user.userId.toString()){
+            if(item.user.toString() === req.user.userId.toString()) {
                 commentIndex = index;
             }
         });
@@ -191,7 +191,7 @@ export const commentOnPost = async(req,res) => {
         else{
             post.comments.push({
                 user: req.user.userId,
-                Comment: req.body.comment,
+                comment: req.body.comment,
             });
             await post.save();
             return res.status(200).json({
@@ -200,6 +200,7 @@ export const commentOnPost = async(req,res) => {
             });
         }
     }catch(error){
+        console.error("Error in commentOnPost:", error); 
         res.status(500).json({
             success: false,
             message: error.message,
@@ -240,7 +241,7 @@ export const deleteComment = async(req,res) => {
         else{
             post.comments.forEach((item, index) => {
                 console.log(item);
-                if((item.user.toString) === req.user.userId.toString()){
+                if((item.user.toString()) === req.user.userId.toString()){
                     return post.comments.splice(index,1);
                 }
             });
@@ -252,6 +253,7 @@ export const deleteComment = async(req,res) => {
             });
         }
     }catch(error){
+        console.log("Error in commentOnPost:", error); 
         res.status(500).json({
             success: false,
             message: error.message,
