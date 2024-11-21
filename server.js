@@ -1,7 +1,7 @@
 import './config/db.js';
 import express from 'express';
 import cors from 'cors';
-import AutRoutes from './routes/Auth.js';
+import AutRoutes from './routes/auth.js';
 import postRoutes from './routes/post.js';
 import userRoutes from './routes/user.js';
 import cookieParser from 'cookie-parser';
