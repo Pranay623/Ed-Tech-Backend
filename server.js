@@ -9,7 +9,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 
 import chatSocket from './sockets/chat.js';
-import authRoutes from './routes/auth.js';
+import AutRoutes from './routes/auth.js';
 import chatroomRoutes from './routes/chatroom.js';
 
 const app = express();
@@ -19,6 +19,7 @@ const port = 3000;
 var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
+    methods: ['GET', 'POST'],
     Credentials: true,
   }
 
@@ -38,6 +39,8 @@ const io = new Server(server, {
     cors: {
         origin: '*', // Adjust to allow specific origins if necessary
         methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type'],
+        credentials: true,
     },
 });
 
