@@ -5,6 +5,7 @@ import AutRoutes from './routes/auth.js';
 import postRoutes from './routes/post.js';
 import userRoutes from './routes/user.js';
 import cookieParser from 'cookie-parser';
+import router from './controllers/channel.js';
 
 const app = express();
 const port = 3000;
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use('/auth', AutRoutes)
 app.use('', postRoutes)
 app.use('', userRoutes)
+app.use('',router)
 
 
 app.listen(port, () => {

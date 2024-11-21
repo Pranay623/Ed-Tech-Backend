@@ -95,6 +95,7 @@ const Login =async (req, res) => {
         res.status(200).json({
             success: true,
             message: "User logged in successfully",
+            user,
             token,
             loginStreak: user.loginStreak,  // Return the login streak in the response
         });
