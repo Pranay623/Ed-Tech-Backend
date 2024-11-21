@@ -41,12 +41,13 @@ router.post('/api/messages', async (req, res) => {
 });
 
 // GET route to fetch messages by userId
-router.get('/api/messages/:userId', async (req, res) => {
+router.get('/api/messages/:field', async (req, res) => {
     const { userId } = req.params;
+    const {field} =req.params;
 
     try {
         // Fetch messages from the database where userId matches
-        const messages = await Message.find({ userId });
+        const messages = await Message.find({ field });
 
         // Check if messages exist
         if (messages.length === 0) {
