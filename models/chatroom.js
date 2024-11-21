@@ -1,16 +1,3 @@
-import mongoose from "mongoose";
-
-
-const chatSchema = new mongoose.Schema({
-  channel: { type: String, required: true },
-  username: { type: String, required: true },
-  message: { type: String, required: true },
-  timestamp: { type: Date, default: Date.now }
-});
-
-
-const Chat = mongoose.model('Chat', chatSchema);
-
 const chatroomSchema = new mongoose.Schema({
     name: {
       type: String,
@@ -55,5 +42,4 @@ const chatroomSchema = new mongoose.Schema({
   const Chatroom = mongoose.model("Chatroom", chatroomSchema);
   
   export default Chatroom;
-  export { Chat };
   
