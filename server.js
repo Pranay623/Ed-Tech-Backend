@@ -1,7 +1,7 @@
 import './config/db.js';
 import express from 'express';
 import cors from 'cors';
-import AutRoutes from '../Ed-Tech Backend/routes/auth.js';
+import AutRoutes from './routes/auth.js';
 // import postRoutes from './routes/post.js';
 // import profileRoutes from './routes/profile.js';
 import cookieParser from 'cookie-parser';
