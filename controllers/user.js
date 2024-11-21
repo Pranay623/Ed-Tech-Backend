@@ -3,7 +3,7 @@ import userModel from '../models/user.js';
 // Get User Profile
 export const getUserProfile = async (req, res) => {
     try {
-        const user = await userModel.findById(req.user.id);  // Assuming req.user.id is set by a middleware after authentication
+        const user = await userModel.findById(req.user.id).populate("posts");  // Assuming req.user.id is set by a middleware after authentication
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
