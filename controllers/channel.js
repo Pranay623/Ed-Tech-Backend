@@ -40,4 +40,37 @@ router.post('/api/messages', async (req, res) => {
     }
 });
 
+// GET route to fetch messages by userId
+router.get('/api/messages/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        // Fetch messages from the database where userId matches
+        const messages = await Message.find({ userId });
+
+        // Check if messages exist
+        if (messages.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No messages found for this user',
+            });
+        }
+
+        // Respond with the messages
+        res.json({
+            success: true,
+            messages,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch messages',
+            error,
+        });
+    }
+});
+
+
+
 export default router;  // Export router to be used in other parts of the application
