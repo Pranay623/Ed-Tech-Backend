@@ -3,12 +3,11 @@ import postModel from '../models/post.js';
 // Create a New Post
 export const createPost = async (req, res) => {
     try {
-        const { caption, image, tags } = req.body;  // You can add tags or other attributes as needed
+        const { caption, tags } = req.body;  // You can add tags or other attributes as needed
         const newPost = new postModel({
             caption,
-            image,
             owner: req.user.id,  // Assuming the owner is the authenticated user
-            tags: tags || [],
+            tags: Array.isArray(tags) ? tags.join(", ") : tags,
         });
 
         await newPost.save();
@@ -191,7 +190,7 @@ export const commentOnPost = async(req,res) => {
         else{
             post.comments.push({
                 user: req.user.userId,
-                comment: req.body.comment,
+                Comment: req.body.comment,
             });
             await post.save();
             return res.status(200).json({
@@ -200,7 +199,7 @@ export const commentOnPost = async(req,res) => {
             });
         }
     }catch(error){
-        console.error("Error in commentOnPost:", error); 
+        console.log("Error in commentOnPost:", error); 
         res.status(500).json({
             success: false,
             message: error.message,

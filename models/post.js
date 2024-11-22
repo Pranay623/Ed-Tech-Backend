@@ -17,7 +17,9 @@ const postSchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  tags: [String], // E.g., ["#jee", "#neet"], allows filtering by tags
+  tags: {
+    type: String, // Single string to store tags
+  },
 
   likes: [
     {
