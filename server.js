@@ -12,14 +12,14 @@ const port = 3000;
 
 
 var corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: '*',
     optionsSuccessStatus: 200,
-    credentials: true,
+    // credentials: true,
   }
 
 
 app.use(express.json());
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 
