@@ -3,13 +3,12 @@ import { createPost, getAllPosts, deletePost, likeAndUnlikePost, getPostOfFollow
 import {jwtAuthMiddleware} from "../middlewares/jwt.js"
 const postRoutes = express.Router()
 
-postRoutes.get('/posts',jwtAuthMiddleware, getAllPosts);
-postRoutes.post('/posts/create',jwtAuthMiddleware, createPost);
-postRoutes.delete('/posts/:id',jwtAuthMiddleware, deletePost);
-postRoutes.post('/post/:id',jwtAuthMiddleware, likeAndUnlikePost);
-postRoutes.get('/post/following',jwtAuthMiddleware, getPostOfFollowing);
-postRoutes.put('/post/comment/:id',jwtAuthMiddleware, commentOnPost); 
-postRoutes.delete('/post/comment/:id',jwtAuthMiddleware, deleteComment);
-
+postRoutes.get('/posts', getAllPosts);
+postRoutes.post('/posts/create', createPost);
+postRoutes.delete('/posts/:id', deletePost);
+postRoutes.post('/post/:id', likeAndUnlikePost);
+postRoutes.get('/post/following', getPostOfFollowing);
+postRoutes.put('/post/comment/:id', commentOnPost); 
+postRoutes.delete('/post/comment/:id', deleteComment);
 
 export default postRoutes

@@ -18,7 +18,7 @@ const postSchema = new mongoose.Schema({
   },
 
   tags: {
-    type: String, // Single string to store tags
+    type: String,
   },
 
   likes: [

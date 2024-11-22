@@ -3,10 +3,10 @@ import postModel from '../models/post.js';
 // Create a New Post
 export const createPost = async (req, res) => {
     try {
-        const { caption, tags } = req.body;  // You can add tags or other attributes as needed
+        const { caption,owner, tags } = req.body;  
         const newPost = new postModel({
             caption,
-            owner: req.user.id,  // Assuming the owner is the authenticated user
+            owner,  
             tags: Array.isArray(tags) ? tags.join(", ") : tags,
         });
 
@@ -35,7 +35,7 @@ export const deletePost = async (req, res) => {
         }
 
         // Check if the logged-in user is the owner of the post
-        if (post.owner.toString() !== req.user.userId.toString()) {
+        if (post.owner.toString() !== req.body.owner.toString()) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized",
@@ -46,7 +46,7 @@ export const deletePost = async (req, res) => {
         await post.deleteOne();
 
         // Find the user and remove the post ID from their posts array
-        const user = await userModel.findById(req.user.userId);
+        const user = await userModel.findById(req.body.owner);
         if (user) {
             const index = user.posts.indexOf(req.params.id);
             if (index !== -1) {
@@ -104,8 +104,8 @@ export const likeAndUnlikePost = async(req, res)=>{
             });
         }
         
-        if(post.likes.includes(req.user.userId)){
-            const index = post.likes.indexOf(req.user.userId);
+        if(post.likes.includes(req.body.owner)){
+            const index = post.likes.indexOf(req.body.owner);
             post.likes.splice(index, 1);
             await post.save();
             
@@ -117,7 +117,7 @@ export const likeAndUnlikePost = async(req, res)=>{
         }
 
         else{
-            post.likes.push(req.user.userId);
+            post.likes.push(req.body.owner);
             await post.save();
 
             return res.status(200).json({
@@ -138,7 +138,7 @@ export const likeAndUnlikePost = async(req, res)=>{
 export const getPostOfFollowing = async (req,res) => {
     try{
 
-        const user= await userModel.findById(req.user.userId);
+        const user= await userModel.findById(req.body.owner);
         const posts = await postModel.find({
             owner: {
                 $in: user.following,
@@ -174,7 +174,7 @@ export const commentOnPost = async(req,res) => {
         let commentIndex = -1;
         post.comments.forEach((item, index) => {
             console.log(item);
-            if(item.user.toString() === req.user.userId.toString()) {
+            if(item.user.toString() === req.body.owner.toString()) {
                 commentIndex = index;
             }
         });
@@ -189,7 +189,7 @@ export const commentOnPost = async(req,res) => {
         }
         else{
             post.comments.push({
-                user: req.user.userId,
+                user: req.body.owner,
                 Comment: req.body.comment,
             });
             await post.save();
@@ -218,7 +218,7 @@ export const deleteComment = async(req,res) => {
                 message: "Post not found",
             });
         }
-        if(post.owner.toString()===req.user.userId.toString()){
+        if(post.owner.toString()===req.body.owner.toString()){
             if (req.body.commentId==undefined){
                 return res.status(404).json({
                     success: false,
@@ -240,7 +240,7 @@ export const deleteComment = async(req,res) => {
         else{
             post.comments.forEach((item, index) => {
                 console.log(item);
-                if((item.user.toString()) === req.user.userId.toString()){
+                if((item.user.toString()) === req.body.owner.toString()){
                     return post.comments.splice(index,1);
                 }
             });
