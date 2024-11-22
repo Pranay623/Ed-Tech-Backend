@@ -14,7 +14,7 @@ const port = 3000;
 var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
-    Credentials: true,
+    credentials: true,
   }
 
 
