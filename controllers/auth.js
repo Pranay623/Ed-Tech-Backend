@@ -90,7 +90,7 @@ const Login =async (req, res) => {
         await user.save();
 
         // Create the JWT Token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 'h' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '3h' });
         res.cookie("token", token, {
             secure: true, 
             maxAge: 3 * 24 * 3600 * 1000,
